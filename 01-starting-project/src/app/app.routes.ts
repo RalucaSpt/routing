@@ -16,7 +16,11 @@ export const routes: Routes = [
         children: [
             {
                 path: 'tasks',
-                component: NewTaskComponent,
+                component: TaskComponent,
+            },
+            {
+                path: 'tasks/new',
+                component: NewTaskComponent
             }
         ],
     },
