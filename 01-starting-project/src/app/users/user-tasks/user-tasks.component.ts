@@ -1,9 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { UsersService } from '../users.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-user-tasks',
+  imports: [RouterOutlet],
   standalone: true,
   templateUrl: './user-tasks.component.html',
   styleUrl: './user-tasks.component.css',
 })
-export class UserTasksComponent {}
+export class UserTasksComponent {
+  userId = input<string>();
+  private usersService = inject(UsersService)
+
+  userName = computed(() => this.usersService.users.find(user => user.id === this.userId())?.name);
+}
