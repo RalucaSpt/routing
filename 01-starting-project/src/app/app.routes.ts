@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { NoTaskComponent } from "./tasks/no-task/no-task.component";
-import { UserTasksComponent } from "./users/user-tasks/user-tasks.component";
+import { resolveUSerName as resolveUserName, UserTasksComponent } from "./users/user-tasks/user-tasks.component";
 import { routes as usersRoutes } from "./users/users.routes";
 
 export const routes: Routes = [
@@ -15,6 +15,9 @@ export const routes: Routes = [
         children: usersRoutes,
         data:{
             message: 'Hello'
+        },
+        resolve: {
+            userName: resolveUserName
         }
     },
     {
