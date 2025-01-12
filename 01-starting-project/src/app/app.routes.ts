@@ -5,15 +5,15 @@ import { resolveTitle, resolveUSerName as resolveUserName, UserTasksComponent } 
 import { routes as usersRoutes } from "./users/users.routes";
 import { inject } from "@angular/core";
 
-const dummyCanMatch: CanMatchFn = ( route, segments) =>{
-    const router = inject(Router);
-    const shoulGetAccess = Math.random();
-    if(shoulGetAccess < 0.5){
-        return true;
-    }
+// const dummyCanMatch: CanMatchFn = ( route, segments) =>{
+//     const router = inject(Router);
+//     const shoulGetAccess = Math.random();
+//     if(shoulGetAccess < 0.5){
+//         return true;
+//     }
 
-    return new RedirectCommand(router.parseUrl('/unauthorized'));
-};
+//     return new RedirectCommand(router.parseUrl('/unauthorized'));
+// };
 
 export const routes: Routes = [
     {
@@ -25,7 +25,7 @@ export const routes: Routes = [
         path: 'users/:userId',
         component: UserTasksComponent,
         children: usersRoutes,
-        canMatch: [dummyCanMatch],
+        // canMatch: [dummyCanMatch],
         data:{
             message: 'Hello'
         },

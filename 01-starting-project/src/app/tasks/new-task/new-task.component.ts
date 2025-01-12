@@ -1,8 +1,9 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TasksService } from '../tasks.service';
-import { Router, RouterLink } from '@angular/router';
+import { CanDeactivateFn, Router, RouterLink } from '@angular/router';
+import { NewTaskData } from '../task/task.model';
 
 @Component({
   selector: 'app-new-task',
@@ -35,3 +36,11 @@ export class NewTaskComponent {
   }
 
 }
+
+export const canLeaveEditPage: CanDeactivateFn<NewTaskComponent> = (component) => {
+  if(component.enteredTitle() || component.enteredSummary() || component.enteredDate()){
+    return window.confirm('Do you really want to leave?');
+  }
+  return true;
+}
+;
