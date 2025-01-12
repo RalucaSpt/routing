@@ -1,32 +1,43 @@
-import { Component, computed, DestroyRef, inject, input, OnInit } from '@angular/core';
-import { UsersService } from '../users.service';
+import {
+  Component,
+  DestroyRef,
+  OnInit,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-user-tasks',
-  imports: [RouterOutlet, RouterLink],
   standalone: true,
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './user-tasks.component.html',
   styleUrl: './user-tasks.component.css',
 })
 export class UserTasksComponent implements OnInit {
-  // userId = input<string>();
-  userName = '';  
+  // userId = input.required<string>();
+  userName = '';
   private usersService = inject(UsersService);
   private activatedRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
-  // userName = computed(() => this.usersService.users.find(user => user.id === this.userId())?.name);
-  ngOnInit(): void {
-      console.log(this.activatedRoute);
-      const subscritpion = this.activatedRoute.paramMap.subscribe({
-        next: (paramMap => {
-          this.userName = this.usersService.users.find(user => user.id === paramMap.get('userId'))?.name || '';
-        })
-      });
+  // userName = computed(
+  //   () => this.usersService.users.find((u) => u.id === this.userId())?.name
+  // );
 
-      this.destroyRef.onDestroy(() => {
-        subscritpion.unsubscribe();
-      });
+  ngOnInit(): void {
+    console.log(this.activatedRoute);
+    const subscription = this.activatedRoute.paramMap.subscribe({
+      next: (paramMap) => {
+        this.userName =
+          this.usersService.users.find((u) => u.id === paramMap.get('userId'))
+            ?.name || '';
+      },
+    });
+
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
